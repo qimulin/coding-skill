@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * dp 数组的迭代解法
+ * dp数组的迭代解法
  * @author lin.xc
  * @date 2021/5/12
  * 当然，我们也可以自底向上使用 dp table 来消除重叠子问题，关于「状态」「选择」和 base case 与之前没有区别，

@@ -1,7 +1,7 @@
 package lin.xc.coding.skill.algorithm.dynamic_programming;
 
 /**
- * 动态规划的「状态压缩
+ * 动态规划的「状态压缩」
  * @author lin.xc
  * @date 2021/5/12
  * {@link Case3} 这个例子的最后，讲一个细节优化。细心的读者会发现，根据斐波那契数列的状态转移方程，当前状态只和之前的两个状态有关，

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 凑零钱问题
+ * 递归解法
  * @author lin.xc
  * @date 2021/5/12
  **/
