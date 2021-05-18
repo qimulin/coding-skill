@@ -2,7 +2,7 @@ package lin.xc.coding.skill.algorithm.sort;
 
 /**
  * 选择排序
- * 选择好本轮最小的元素，和首元素进行替换
+ * 记号好本轮最小的元素位置，一轮结束后和首元素进行替换
  * @author lin.xc
  * @date 2021/5/17
  **/
