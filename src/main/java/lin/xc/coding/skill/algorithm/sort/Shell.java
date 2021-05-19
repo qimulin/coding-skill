@@ -9,6 +9,7 @@ public class Shell {
 
     /**
      * 《算法》一书中用到的方法
+     *  h值设置较好，性能较高
      * */
     public static void sort(Comparable[] arr) {
         // 将数组按升序排列
