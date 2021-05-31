@@ -4,15 +4,13 @@ package lin.xc.coding.skill.algorithm.sort;
  * @author lin.xc
  * @date 2021/5/17
  **/
-public class Example {
+public abstract class SortBase {
 
     /**
      * 排序方法
      * @param arr 可排序的数组
      * */
-    public static void sort(Comparable[] arr) {
-        /** 具体方法 */
-    }
+    public abstract void sort(Comparable[] arr);
 
     /**
      * 是否小于方法：对可比较的元素进行比较
@@ -52,13 +50,6 @@ public class Example {
         return true;
     }
 
-    public static void main(String[] args) {
-        String[] a = new String[]{"abc","bcd","acd","cde","ceb"};
-        System.out.println(a);
-        sort(a);
-        System.out.println("是否已排序？"+isSorted(a));
-        show(a);
-    }
 
     /**
      * 后记：
