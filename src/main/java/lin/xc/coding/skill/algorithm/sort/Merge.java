@@ -10,6 +10,9 @@ public class Merge {
     // 归并所需的辅助数组
     private static Comparable[] aux;
 
+    /**
+     * “自顶向下”的归并排序
+     * */
     public static void sort(Comparable[] a){
         aux = new Comparable[a.length];
         sort(a, 0, a.length-1);
@@ -34,6 +37,52 @@ public class Merge {
         sort(a, mid+1, hi);
         // 归并结果
         merge(a, lo, mid, hi);
+    }
+
+    /**
+     * “自底向上”的归并排序
+     * 从最相邻的两个数开始比较归并比较
+     * */
+    public static void sortBU(Comparable[] array){
+        // 进行lgN次两两归并
+        int N = array.length;
+        // “辅助数组”的大小和“比较数组”的大小一致
+        aux = new Comparable[N];
+        for(int sz=1; sz<N; sz+=sz){
+            // sz子数组大小 sz+=sz sz=sz+sz
+            System.out.println("sz="+sz);
+            int mid, hi;
+            for(int lo=0; lo<N-sz; lo+=sz+sz){
+                mid = lo+sz-1;
+                hi = Math.min(lo+sz+sz-1, N-1);
+                System.out.println(String.format("lo=%d mid=%d hi=%d", lo, mid, hi));
+                // lo：子数组索引 lo=lo+sz+sz
+                merge(array, lo, mid, hi);
+            }
+        }
+        /**
+         * sz=1
+         * lo=0 mid=0 hi=1
+         * lo=2 mid=2 hi=3
+         * lo=4 mid=4 hi=5
+         * lo=6 mid=6 hi=7
+         * lo=8 mid=8 hi=9
+         * lo=10 mid=10 hi=11
+         * lo=12 mid=12 hi=13
+         * lo=14 mid=14 hi=15
+         * sz=2
+         * lo=0 mid=1 hi=3
+         * lo=4 mid=5 hi=7
+         * lo=8 mid=9 hi=11
+         * lo=12 mid=13 hi=15
+         * sz=4
+         * lo=0 mid=3 hi=7
+         * lo=8 mid=11 hi=15
+         * sz=8
+         * lo=0 mid=7 hi=15
+         * sz=16
+         * lo=0 mid=15 hi=16
+         * */
     }
 
     /**
@@ -118,10 +167,13 @@ public class Merge {
         // 需保证切点的两端都是有排序的
         String[] a = new String[]{"03","03","04","07","09","11","12","16","01","05","06","06","08","11","12","13","17"};
         show(a);
-        sort(a);
+        sortBU(a);
         System.out.println("排序操作后：");
         show(a);
         System.out.println("是否已排序？"+isSorted(a));
+        int lo=5,sz=2;
+        lo+=sz+sz;
+        System.out.println(lo);
     }
 
     /**
