@@ -19,7 +19,7 @@ public class Insertion {
         int len = arr.length;
         // i从1开始
         for(int i = 1; i < len; i ++){
-            // 仅当当前位置比前一个位置小，且当前位置还不是第一位的时候，迭代往下比较
+            // 仅当 当前位置比前一个位置小，且当前位置还不是第一位的时候，迭代往下比较
             for(int j = i; j > 0 && less(arr[j],arr[j - 1]); j--){
                 exchange(arr, j,j - 1);
             }
