@@ -14,25 +14,26 @@ public class Shell {
     public static void sort(Comparable[] arr) {
         // 将数组按升序排列
         int len = arr.length;
+        System.out.println("len="+len);
         // 间隙初始为1
-        int gap = 1;
-        while(gap < len/3){
-            gap = 3*gap+1;     //1，4，13，40，121，364，1093...
+        int diff = 1;
+        while(diff < len/3){
+            diff = 3*diff+1;     //1，4，13，40，121，364，1093...
         }
-        while(gap >= 1){
-            System.out.println("---------- h="+gap);
-            // 将数组变为h有序
-            for(int i=gap;i<len;i++){
+        while(diff >= 1){
+            System.out.println("---------- diff="+diff);
+            // 将数组变为diff有序
+            for(int i=diff;i<len;i++){
                 System.out.println("------ i="+i);
-                // 将a[i]插入到a[i-h]、a[i-2*h]、a[i-3*h]...之中
-                for(int j=i; j>=gap && less(arr[j], arr[j-gap]); j-=gap){
-                    System.out.println("--- j="+j);
-                    System.out.print("["+j+"]="+arr[j]+" <——> ["+(j-gap)+"]="+arr[j-gap]+",");
-                    exchange(arr, j, j-gap);
+                // 将a[i]根据大小插入到a[i-diff]、a[i-2*diff]、a[i-3*diff]...之中
+                for(int j=i; j>=diff && less(arr[j], arr[j-diff]); j-=diff){
+                    System.out.print("["+j+"]="+arr[j]+" <——> ["+(j-diff)+"]="+arr[j-diff]+",");
+                    System.out.println(" when j="+j+" and j-diff="+(j-diff));
+                    exchange(arr, j, j-diff);
                 }
                 System.out.println();
             }
-            gap = gap/3;
+            diff = diff/3;
         }
     }
 
@@ -99,15 +100,31 @@ public class Shell {
 //        String[] a = new String[]{"L","E","E","A","M","H","L","E","T","S","O","L","P","S","X","R"};
 //        String[] a = new String[]{"12","11","10","9","8","7","6","5","4","3","2","1","16","15","14","13"};
         String[] a = new String[]{"16","15","14","13","12","11","10","09","08","07","06","05","04","02","01","03","17"};
+//        String[] a = new String[]{"9","8","7","6","5","4"};
         show(a);
-        mySort(a);
+        sort(a);
         System.out.println("排序操作后：");
         show(a);
         System.out.println("是否已排序？"+isSorted(a));
     }
 
     /**
-     * 后记：
+     * 后记：为了方便理解和回忆，搞一个{@link #sort(Comparable[])}方法的示例讲解，简单数字组合：16 15 14 13 12 11 10 09 08 07 06 05 04 02 01 03 17
+     * 算出首次间隙为13，【注意】先取间隔下标为1的和下标为0的比较
+     * ----- 间隙为13时，则此间隔下 将shell_arr[1]组（arr[13]~arr[len-1]）与shell_arr[0]组（arr[0]~arr[len-1-13]）逐一间隔为4的元素进行比较 -----
+     * 比较下标13和下标0，得：02 15 14 13 12 11 10 09 08 07 06 05 04 16 01 03 17
+     * 比较下标14和下标1，得：02 01 14 13 12 11 10 09 08 07 06 05 04 16 15 03 17
+     * 比较下标15和下标2，得：02 01 03 13 12 11 10 09 08 07 06 05 04 16 15 14 17
+     * 比较下标16和下标3，得：02 01 03 13 12 11 10 09 08 07 06 05 04 16 15 14 17 --- 不需要变
+     * ----- 间隙为4时，然后将shell_arr[1]组（arr[4]~arr[len-1]）与shell_arr[0]组（arr[0]~arr[len-1-4]）逐一间隔为4的进行比较 -----
+     * 比较下标4和下标0，得：02 01 03 13 12 11 10 09 08 07 06 05 04 16 15 14 17 --- 不需要变
+     * 比较下标5和下标1，得：02 01 03 13 12 11 10 09 08 07 06 05 04 16 15 14 17 --- 不需要变
+     * 比较下标6和下标2，得：02 01 03 13 12 11 10 09 08 07 06 05 04 16 15 14 17 --- 不需要变
+     * 比较下标7和下标3，得：02 01 03 09 12 11 10 13 08 07 06 05 04 16 15 14 17
+     * ……
+     * 比较下标16和下标12，得：自己推
+     * ----- 间隙为1时，则此间隔下 将shell_arr[1]组（arr[2]~arr[len-1]）与shell_arr[0]组（arr[0]~arr[len-1-1]）逐一间隔为4的元素进行比较 -----
+     * ……（不再一一列举）
      * */
 
 }

@@ -13,7 +13,7 @@
 - 数据移动是最少的。每次交换都会改变两个数组元素的值，因此选择排序用了N次交换一一交换次数和数组的大小是线性关系。我们将研究的其他任何算法
   都不具备这个特征（大部分的增长数量级都是线性对数或是平方级别）。
 
-[选择排序代码示例](../src/main/java/lin/xc/coding/skill/algorithm/sort/Selecton.java)
+[选择排序代码示例](../src/main/java/lin/xc/coding/skill/algorithm/sort/Selection.java)
 
 ## 冒泡排序
 大学时期，最熟识的就是冒泡排序，冒泡排序（Bubble Sort，译为：泡沫排序或气泡排序，比较相邻的两个，从左到右，大的往后放，第二轮继续，但是第一轮比较出的最大值不参与第二轮的比较）是一种简单的排序算法。
