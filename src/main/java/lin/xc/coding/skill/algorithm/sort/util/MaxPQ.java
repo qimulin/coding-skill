@@ -1,6 +1,14 @@
 package lin.xc.coding.skill.algorithm.sort.util;
 
+import lin.xc.coding.skill.algorithm.sort.std.StdIn;
+import lin.xc.coding.skill.algorithm.sort.std.StdOut;
+
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /******************************************************************************
+ * 最大堆（最大值在堆的根节点） 优先队列
  *  Compilation:  javac MaxPQ.java
  *  Execution:    java MaxPQ < input.txt
  *  Dependencies: StdIn.java StdOut.java
@@ -18,60 +26,58 @@ package lin.xc.coding.skill.algorithm.sort.util;
  *  (ala insertion sort).
  *  @author Robert Sedgewick
  ******************************************************************************/
-
-
-import lin.xc.coding.skill.algorithm.sort.std.StdIn;
-import lin.xc.coding.skill.algorithm.sort.std.StdOut;
-
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-
 public class MaxPQ<Key> implements Iterable<Key> {
-    private Key[] pq;                    //基于堆的完全二叉树
-    private int N;                       // 存储于pq[1..N]中，pq[0]没有使用
-    private Comparator<Key> comparator;  // optional Comparator
 
+    private Key[] pq;                    // 基于堆的完全二叉树
+    private int N;                       // 存储于pq[1..N]中，pq[0]没有使用，这样就相当于元素个数了
+    private Comparator<Key> comparator;  // 可选的比较器
 
+    /**
+     * 构造函数，自定义容量
+     * */
     public MaxPQ(int initCapacity) {
         pq = (Key[]) new Object[initCapacity + 1];
         N = 0;
     }
 
     /**
-     * 创建一个优先队列
+     * 无参构造函数，默认容量=1
      */
-    public MaxPQ() {
+    public MaxPQ(){
         this(1);
     }
 
-
+    /**
+     * 构造函数，带容量参数和比较器
+     * */
     public MaxPQ(int initCapacity, Comparator<Key> comparator) {
         this.comparator = comparator;
         pq = (Key[]) new Object[initCapacity + 1];
         N = 0;
     }
 
-
     public MaxPQ(Comparator<Key> comparator) {
         this(1, comparator);
     }
 
     /**
-     * 用a[]中的元素创建一个优先队列
+     * 用keys[]中的元素创建一个优先队列
      */
     public MaxPQ(Key[] keys) {
+        // 设置大小值
         N = keys.length;
+        // 定义数组
         pq = (Key[]) new Object[keys.length + 1];
-        for (int i = 0; i < N; i++)
+        // 先将元素全部存入pg数组
+        for (int i = 0; i < N; i++){
             pq[i+1] = keys[i];
-        for (int k = N/2; k >= 1; k--)
+        }
+        //
+        for (int k = N/2; k >= 1; k--){
             sink(k);
+        }
         assert isMaxHeap();
     }
-
-
 
     /**
      * 返回队列是否为空
@@ -95,25 +101,29 @@ public class MaxPQ<Key> implements Iterable<Key> {
         return pq[1];
     }
 
-    // helper function to double the size of the heap array
+    /**
+     * 重新定义大小
+     * */
     private void resize(int capacity) {
         assert capacity > N;
+        // 重新定义一个新元素大小的数组
         Key[] temp = (Key[]) new Object[capacity];
+        // 将之前的所有元素拷贝过去
         for (int i = 1; i <= N; i++) {
             temp[i] = pq[i];
         }
+        // 将新数组重新赋值给pq
         pq = temp;
     }
-
 
     /**
      * 向优先队列中插入一个元素
      */
     public void insert(Key x) {
-
         // double size of array if necessary
-        if (N >= pq.length - 1) resize(2 * pq.length);
-
+        if (N >= pq.length - 1){
+            resize(2 * pq.length);
+        }
         // add x, and percolate it up to maintain heap invariant
         pq[++N] = x;
         swim(N);
@@ -134,23 +144,32 @@ public class MaxPQ<Key> implements Iterable<Key> {
         return max;
     }
 
-
     /***************************************************************************
      * Helper functions to restore the heap invariant.
      ***************************************************************************/
-
+    /**
+     * 上浮
+     * */
     private void swim(int k) {
+        // 当本下标元素比父节点（下标为的k/2结点）大时，交换（即上浮）
         while (k > 1 && less(k/2, k)) {
             exch(k, k/2);
             k = k/2;
         }
     }
 
+    /**
+     * 下沉
+     * */
     private void sink(int k) {
         while (2*k <= N) {
             int j = 2*k;
-            if (j < N && less(j, j+1)) j++;
-            if (!less(k, j)) break;
+            if (j < N && less(j, j+1)){
+                j++;
+            }
+            if (!less(k, j)){
+                break;
+            }
             exch(k, j);
             k = j;
         }
@@ -161,9 +180,9 @@ public class MaxPQ<Key> implements Iterable<Key> {
      ***************************************************************************/
     private boolean less(int i, int j) {
         if (comparator == null) {
+            // 若没传比较器，则进行默认比较
             return ((Comparable<Key>) pq[i]).compareTo(pq[j]) < 0;
-        }
-        else {
+        } else {
             return comparator.compare(pq[i], pq[j]) < 0;
         }
     }
@@ -179,7 +198,10 @@ public class MaxPQ<Key> implements Iterable<Key> {
         return isMaxHeap(1);
     }
 
-    // is subtree of pq[1..N] rooted at k a max heap?
+    /**
+     * is subtree of pq[1..N] rooted at k a max heap?
+     * 关于pq[1..N]数组其子树所对应根k的位置是否是最大堆
+     * */
     private boolean isMaxHeap(int k) {
         if (k > N) return true;
         int left = 2*k, right = 2*k + 1;
