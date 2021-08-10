@@ -18,8 +18,13 @@ public class DisorderedArrayMaxPQ<Key extends Comparable<Key>> {
         size = 0;
     }
 
-    public boolean isEmpty()   { return size == 0; }
-    public int size()          { return size;      }
+    public boolean isEmpty(){
+        return size == 0;
+    }
+
+    public int size(){
+        return size;
+    }
 
     /**
      * 插入元素
@@ -29,6 +34,9 @@ public class DisorderedArrayMaxPQ<Key extends Comparable<Key>> {
         pq[size++] = x;
     }
 
+    /**
+     * 删除最大值元素，相当于在删除的时候，进行选择排序，然后删除最大的值
+     * */
     public Key delMax() {
         int max = 0;
         for (int i = 1; i < size; i++){
@@ -62,10 +70,17 @@ public class DisorderedArrayMaxPQ<Key extends Comparable<Key>> {
      ***************************************************************************/
     public static void main(String[] args) {
         DisorderedArrayMaxPQ<String> pq = new DisorderedArrayMaxPQ<String>(10);
-        pq.insert("this");
-        pq.insert("is");
-        pq.insert("a");
-        pq.insert("test");
+        pq.insert("01");
+        pq.insert("02");
+        pq.insert("03");
+        pq.insert("04");
+        pq.insert("09");
+        pq.insert("08");
+        pq.insert("07");
+        pq.insert("06");
+        pq.insert("10");
+        pq.insert("11");
+        // 元素添加完（注意不要溢出）开始操作删除最大的元素
         while (!pq.isEmpty())
             StdOut.println(pq.delMax());
         System.out.println(pq);
